@@ -1,17 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="style.css"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="style.css" />
     <title>repl.it</title>
   </head>
   <body>
     <div>
       <div id="ex1" class="ex">
         <h5>Ex1 - OnClick</h5>
-        <button id="ex1_button">Click me</button>
-        <div id="ex1_content"></div>
+        <button id="ex1_button" onclick="myFunction()">Click me</button>
+        <div id="ex1_content">
+          <script>
+            function myFunction() {
+              document.getElementById("ex1_content").innerHTML =
+                "0,1,2,3,4,5,6,7,8,9!!!!";
+            }
+          </script>
+        </div>
       </div>
 
       <div id="ex2" class="ex">
@@ -29,8 +36,6 @@
           <div id="ex3_two"></div>
         </div>
       </div>
-
-
     </div>
     <script src="script.js"></script>
   </body>
