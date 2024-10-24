@@ -1,34 +1,71 @@
-function myFunction() {
-  document.getElementById("ex1_content").innerHTML = "0,1,2,3,4,5,6,7,8,9";
-}
+(function () {
+  const example = document.getElementById("example");
+  const cw1 = document.getElementById("cw1");
+  const cw2 = document.getElementById("cw2");
+  const cw3 = document.getElementById("cw3");
+  const answer = document.getElementById("answer");
 
-function validateNumber(number) {
-  const tempResponse = document.getElementById("ex2_content");
-  if (number.length !== 9) {
-    tempResponse.textContent = "Dlugosc numeru musi byc rowna 9";
-    return;
-  }
+  example.addEventListener("click", function () {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((array) => {
+        console.log(array);
+        answer.innerHTML = JSON.stringify(array);
+      });
+  });
 
-  if (/[a-zA-z]/.test(number)) {
-    tempResponse.textContent = "Numer nie moze zawierac liter";
-    return;
-  }
+  cw1.addEventListener("click", function () {
+    answer.innerHTML = "Loading...";
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((array) => {
+        answer.innerHTML = "";
+        const ul = document.createElement("ul");
 
-  if (/[^0-9]/.test(number)) {
-    tempResponse.textContent = "Numer nie moze zawierac znakow specjalnych";
-    return;
-  } else tempResponse.textContent = "Numer telefonu jest poprawny";
-}
-function allowDrop(ev) {
-  ev.preventDefault();
-}
+        array.forEach((post) => {
+          const li = document.createElement("li");
+          li.innerHTML = `${post.id}<br><strong>${post.title}</strong><br>${post.body}`;
+          ul.appendChild(li);
+        });
 
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
+        answer.appendChild(ul);
+      });
+  });
 
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-}
+  cw2.addEventListener("click", function () {
+    answer.innerHTML = "Loading...";
+    fetch("https://jsonplaceholder.typicode.com/posts/101")
+      .then((response) => response.json())
+      .then((post) => {
+        answer.innerHTML = "";
+        const ul = document.createElement("ul");
+        const li = document.createElement("li");
+        li.innerHTML = `${post.id}<br><strong>${post.title}</strong<br>${post.body}`;
+        ul.appendChild(li);
+
+        answer.appendChild(ul);
+      });
+  });
+
+  cw3.addEventListener("click", function () {
+    answer.innerHTML = "Processing...";
+
+    const newPost = {
+      title: "Nowy post",
+      body: "Bratku mniam",
+      userId: 1,
+    };
+
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPost),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        answer.innerHTML = `Dodano nowy post o ID = ${data.id}`;
+      });
+  });
+})();
