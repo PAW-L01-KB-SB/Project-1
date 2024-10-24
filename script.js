@@ -34,7 +34,7 @@
 
   cw2.addEventListener("click", function () {
     answer.innerHTML = "Loading...";
-    fetch("https://jsonplaceholder.typicode.com/posts/101")
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
       .then((response) => response.json())
       .then((post) => {
         answer.innerHTML = "";
